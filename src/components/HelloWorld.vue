@@ -16,13 +16,20 @@ import axios from 'axios'
     },
     mounted(){
       this.getWorkers()
+      
     },
     methods:{
       getWorkers(){
         axios.get("http://localhost:8080/get")
         .then((data) => {
           this.workers = data.data
-          console.log(this.workers);
+          this.getWorker()
+        })
+      },
+      getWorker(){
+        axios.get(`http://localhost:8080/get/${this.workers[0].uuid}`)
+        .then((data) => {
+          console.log("you first worker", data.data);
         })
       }
     },
