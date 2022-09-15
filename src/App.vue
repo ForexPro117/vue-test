@@ -1,13 +1,13 @@
 <template lang="pug">
-v-app
-  v-container
-    header
-      router-link.none-decor(to="/") 
-        v-btn Список рабочих
-      router-link.hne.none-decor(to="/about") 
-        v-btn Добавить рабочего
-    v-main
-      router-view
+  v-app
+    v-container
+      header
+        router-link.none-decor(to="/") 
+          v-btn Список рабочих
+        router-link.hne.none-decor(to="/about") 
+          v-btn Добавить рабочего
+      v-main
+        router-view
 </template>
 
 <script>
