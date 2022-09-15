@@ -1,5 +1,7 @@
 <template lang="pug">
-  h1 Ты дома епт!
+div
+  div(v-for="worker in workers")
+    div {{worker}}
 </template>
 
 <script>
@@ -9,14 +11,18 @@ import axios from 'axios'
 
     data(){
       return {
-
+        workers: []
       }
+    },
+    mounted(){
+      this.getWorkers()
     },
     methods:{
-      addWorkers(){
-        axios.get("http://localhost:8080/add",{name:"worker",position:"prorab"})
-        .then(()=> console.log("успех"))
+      getWorkers(){
+        axios.post("http://localhost:8080/list")
+        .then((data) => this.workers = data.data)
       }
     },
+
   }
 </script>

@@ -1,4 +1,15 @@
-<template lang="pug">
-  .about
-    h1 This is an about page
+<template>
+  <NewWorker />
 </template>
+
+<script>
+import NewWorker from '@/components/NewWorker.vue';
+
+  export default {
+    name: 'HomeView',
+
+    components: {
+      NewWorker
+    },
+  }
+</script>
