@@ -1,6 +1,9 @@
 <template lang="pug">
 div
-  v-text-field(v-model="uuid" placeholder="Введите UUID рабочего, которого необходимо удалить") 
+  v-text-field(v-model="uuid" placeholder="Введите UUID рабочего") 
+  v-text-field(v-model="name" placeholder="ФИО") 
+  v-text-field(v-model="position" placeholder="Должность") 
+  v-btn(@click="editWorker") Изменить
   v-btn(@click="deleteWorker") Удалить рабочего
 
   div.mt-5(v-for="worker in workers")
@@ -16,6 +19,8 @@ import axios from 'axios'
       return {
         workers: [],
         uuid: '',
+        name: '',
+        position: ''
       }
     },
     mounted(){
@@ -30,9 +35,13 @@ import axios from 'axios'
         })
       },
       deleteWorker(){
-        axios.get(`http://localhost:8080/delete/${this.uuid}`)
-        .then(() => console.log("успех")),
-        this.getWorkers()
+        axios.delete(`http://localhost:8080/delete/${this.uuid}`)
+        .then(() => console.log("успех"))
+      },
+      editWorker(){
+        axios
+        .post('http://localhost:8080/edit', { uuid: this.uuid, name: this.name, position: this.position })
+        .then(() => console.log('успех'))
       }
     },
 
