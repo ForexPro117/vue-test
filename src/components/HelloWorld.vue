@@ -41,7 +41,7 @@ import axios from 'axios'
       editWorker(){
         axios
         .post('http://localhost:8080/edit', { uuid: this.uuid, name: this.name, position: this.position })
-        .then(() => console.log('успех'))
+        .then(() => this.getWorkers())
       }
     },
 
