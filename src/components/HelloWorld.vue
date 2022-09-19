@@ -1,13 +1,11 @@
 <template lang="pug">
 div
-  v-text-field(v-model="uuid" placeholder="Введите UUID рабочего") 
-  v-text-field(v-model="name" placeholder="ФИО") 
-  v-text-field(v-model="position" placeholder="Должность") 
-  v-btn(@click="editWorker") Изменить
-  v-btn(@click="deleteWorker") Удалить рабочего
-
-  div.mt-5(v-for="worker in workers")
-    div имя: {{worker.name}} должность: {{worker.position}} код: {{worker.uuid}} 
+  v-data-table(:headers="headers" :items="workers")
+    <!-- template(v-slot:item.actions="{ item }")
+      v-icon(small @click="editWorker(item)")
+        | mdi-pencil
+      v-icon(small @click="deleteWorker(item)")
+        | mdi-delete -->
 </template>
 
 <script>
@@ -17,10 +15,12 @@ import axios from 'axios'
 
     data(){
       return {
-        workers: [],
-        uuid: '',
-        name: '',
-        position: ''
+        headers: [
+          { text: 'ФИО', align: 'start', value: 'name' },
+          { text: 'Должность', value: 'position' },
+          { text: 'Действия', value: 'action', sortable: false }
+        ],
+        workers: []
       }
     },
     mounted(){
@@ -30,17 +30,14 @@ import axios from 'axios'
     methods:{
       getWorkers(){
         axios.get("http://localhost:8080/get")
-        .then((data) => {
-          this.workers = data.data
-        })
+        .then((data) => { this.workers = data.data })
       },
-      deleteWorker(){
-        axios.delete(`http://localhost:8080/delete/${this.uuid}`)
-        .then(() => console.log("успех"))
+      deleteWorker(item){
+        axios.delete(`http://localhost:8080/delete/${this.workers[this.workers.indexOf(item)]}`)
+        .then(() => this.getWorkers())
       },
       editWorker(){
-        axios
-        .post('http://localhost:8080/edit', { uuid: this.uuid, name: this.name, position: this.position })
+        axios.post('http://localhost:8080/edit', { uuid: this.uuid, name: this.name, position: this.position })
         .then(() => this.getWorkers())
       }
     },
