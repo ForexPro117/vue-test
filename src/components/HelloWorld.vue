@@ -10,7 +10,7 @@ div
       v-card-title(class="text-h5") Вы уверены, что хотите удалить данные об этом работнике?
       v-divider
       v-card-actions 
-        v-btn( color="red" text @click="deleteDialog=false") отмена
+        v-btn( color="red" text @click="closeDeleteDialog()") отмена
           v-icon(right) mdi-close
         v-spacer
         v-btn( color="teal accent-4" text @click="deleteWorkerCofirm()") удалить
@@ -26,7 +26,7 @@ div
         v-text-field(v-model="position")
       v-divider
       v-card-actions
-        v-btn( color="red" text @click="editDialog=false") отмена
+        v-btn( color="red" text @click="closeEditDialog()") отмена
           v-icon(right) mdi-close
         v-spacer
         v-btn( color="teal accent-4" text @click="editWorkerConfirm()") изменить
